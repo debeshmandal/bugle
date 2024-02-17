@@ -26,7 +26,7 @@ jobs:
       id: image-size
       run: |
         size=$(docker images ${{ env.IMAGE_TAG }} --format "{{.Size}}")
-        size_in_bytes=$(docker inspect ${{ env.IMAGE_TAG }} --format='{{.Size}}')
+        size_in_bytes=$(docker inspect ${{ env.IMAGE_TAG }} --format="{{.Size}}")
         echo "Image size: $size"
         echo "Image size in bytes: $size_in_bytes"
         echo "::set-output name=size::$size_in_byte
