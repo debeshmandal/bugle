@@ -17,8 +17,8 @@ func TestCreateMessage(t *testing.T) {
 func TestWithLambda(t *testing.T) {
 	test_config := Config{
 		body:      "Hello",
-		sender:    "Hello",
-		recipient: "Hello",
+		sender:    "Hello@example.com",
+		recipient: "Hello@example.com",
 		subject:   "Hello",
 	}
 	msg := CreateMessage(
