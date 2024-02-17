@@ -15,12 +15,17 @@ func TestCreateMessage(t *testing.T) {
 }
 
 func TestWithLambda(t *testing.T) {
-	test_config := GetDefaultConfig()
+	test_config := Config{
+		body:      "Hello",
+		sender:    "Hello",
+		recipient: "Hello",
+		subject:   "Hello",
+	}
 	msg := CreateMessage(
 		WithBody(test_config.body),
-		WithSender(test_config.body),
-		WithSubject(test_config.body),
-		WithRecipient(test_config.body),
+		WithSender(test_config.sender),
+		WithSubject(test_config.subject),
+		WithRecipient(test_config.recipient),
 	)
 	body := PartToString(msg.GetParts()[0])
 	if !regexp.MustCompile(test_config.body).MatchString(body) {

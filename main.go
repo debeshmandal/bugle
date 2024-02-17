@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/wneessen/go-mail"
@@ -31,25 +32,33 @@ type ConfigLambda func(*Config)
 
 func WithSubject(s string) ConfigLambda {
 	return func(c *Config) {
-		c.subject = s
+		if s != "" {
+			c.subject = s
+		}
 	}
 }
 
 func WithSender(s string) ConfigLambda {
 	return func(c *Config) {
-		c.sender = s
+		if s != "" {
+			c.sender = s
+		}
 	}
 }
 
 func WithRecipient(s string) ConfigLambda {
 	return func(c *Config) {
-		c.recipient = s
+		if s != "" {
+			c.recipient = s
+		}
 	}
 }
 
 func WithBody(s string) ConfigLambda {
 	return func(c *Config) {
-		c.body = s
+		if s != "" {
+			c.body = s
+		}
 	}
 }
 
@@ -67,7 +76,24 @@ func CreateMessage(cls ...ConfigLambda) *mail.Msg {
 }
 
 func main() {
-	message := CreateMessage()
-	body := message.GetParts()[0]
-	fmt.Println(PartToString(body))
+	var body string
+	var sender string
+	var recipient string
+	var subject string
+
+	flag.StringVar(&body, "body", "", "E-mail Body")
+	flag.StringVar(&subject, "subject", "", "E-mail Subject")
+	flag.StringVar(&sender, "sender", "", "E-mail Sender")
+	flag.StringVar(&recipient, "recipient", "", "E-mail Recipient")
+
+	flag.Parse()
+
+	message := CreateMessage(
+		WithBody(body),
+		WithSender(sender),
+		WithSubject(subject),
+		WithRecipient(recipient),
+	)
+
+	fmt.Println(PartToString(message.GetParts()[0]))
 }
