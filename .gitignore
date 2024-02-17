@@ -22,3 +22,6 @@ go.work
 
 __*
 bugle
+
+# Singularity files
+*.sif
