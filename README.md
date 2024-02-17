@@ -1,16 +1,14 @@
-# :trumpet: bugle: send messages from command line
+# :trumpet: bugle
 
-Bugle is a command-line tool designed for sending messages quickly and efficiently. Built with Go and packaged using Docker, it offers a straightforward way for users to integrate messaging capabilities into their scripts or automation workflows.
+Send messages from command line. Written in Go. Run from the command line. Designed as a tool for distributed systems.
 
 ## Features
 
-- Send messages from the command line
-- Easy integration with scripts and automation tasks
-- Lightweight and fast
+- Terse: 1-liner from command line
+- Portable: Work with executable, go package, Docker image, Apptainer compatible
+- Lightweight: (~10MB Docker Image; ~6MB Compressed Image; ~6MB Binary)
 
 ## Installation
-
-To get started with Bugle, clone this repository and build the Docker container:
 
 ### Golang
 ```bash
@@ -49,8 +47,26 @@ docker run bugle --body="Hello!" --dry-run
 apptainer run docker://debeshmandal/bugle --body="Hello!" --dry-run
 ```
 
-## Contributing
-Contributions to Bugle are welcome! Please refer to the contributing guidelines for more information on how to get involved.
+## Usage
+
+### 1. Set the SMTP environment variables
+```bash
+export BUGLE_SMTP_SERVER=<smtp.example.com>
+export BUGLE_USERNAME=<username>
+export BUGLE_PASSWORD=<password>
+```
+### 2. Set Sender, Recipient, Subject and Body as CLI arguments
+```bash
+bugle --sender="name@email.com" --recipient="name@email.com" --subject="Subject" --body="Message"
+```
+## Incomplete Features
+- Add `--html` for HTML body
+- Add `--attachments` for file attachments
+- Multiple recipients
+- Authentication
+- Add `--slack` to post to slack
+- Other builds that aren't linux/amd64
+- Download executable via `curl` or `wget` as GH release artifact
 
 ## License
 Bugle is licensed under the GPL-3.0 license. See the LICENSE file for details.
