@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/wneessen/go-mail"
 )
@@ -70,9 +72,28 @@ func CreateMessage(cls ...ConfigLambda) *mail.Msg {
 	}
 	message.SetBodyString(mail.TypeTextPlain, config.body)
 	message.Subject(config.subject)
-	message.From(config.sender)
-	message.To(config.recipient)
+	if err := message.From(config.sender); err != nil {
+		log.Fatalf("Failed to set From address: %s", err)
+	}
+	if err := message.To(config.recipient); err != nil {
+		log.Fatalf("Failed to set To address: %s", err)
+	}
 	return message
+}
+
+func CreateClient() *mail.Client {
+	smtp_address := os.Getenv("BUGLE_SMTP_SERVER")
+	client, err := mail.NewClient(
+		smtp_address,
+		mail.WithPort(587),
+		mail.WithSMTPAuth(mail.SMTPAuthPlain),
+		mail.WithUsername(os.Getenv("BUGLE_USERNAME")),
+		mail.WithPassword(os.Getenv("BUGLE_PASSWORD")),
+	)
+	if err != nil {
+		log.Fatalf("Failed to create mail client: %s", err)
+	}
+	return client
 }
 
 func main() {
@@ -80,20 +101,28 @@ func main() {
 	var sender string
 	var recipient string
 	var subject string
+	var dryRun bool
 
 	flag.StringVar(&body, "body", "", "E-mail Body")
 	flag.StringVar(&subject, "subject", "", "E-mail Subject")
 	flag.StringVar(&sender, "sender", "", "E-mail Sender")
 	flag.StringVar(&recipient, "recipient", "", "E-mail Recipient")
+	flag.BoolVar(&dryRun, "dry-run", false, "Set to skip using client, useful for testing and CI")
 
 	flag.Parse()
 
 	message := CreateMessage(
-		WithBody(body),
 		WithSender(sender),
 		WithSubject(subject),
 		WithRecipient(recipient),
+		WithBody(body),
 	)
 
-	fmt.Println(PartToString(message.GetParts()[0]))
+	if dryRun {
+		fmt.Println(PartToString(message.GetParts()[0]))
+	}
+	client := CreateClient()
+	if err := client.DialAndSend(message); err != nil {
+		log.Fatalf("Failed to send mail: %s", err)
+	}
 }

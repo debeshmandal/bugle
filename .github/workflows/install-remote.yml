@@ -25,4 +25,4 @@ jobs:
       run: go install github.com/debeshmandal/bugle
 
     - name: Run
-      run: bugle --body="Hello!"
+      run: bugle --body="Hello!" --dry-run
