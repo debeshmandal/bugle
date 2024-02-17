@@ -15,15 +15,7 @@ To get started with Bugle, clone this repository and build the Docker container:
 ### Golang
 ```bash
 go install github.com/debeshmandal/bugle
-./bugle --body="Hello!"
-```
-
-### Docker
-```bash
-git clone https://github.com/debeshmandal/bugle.git
-cd bugle
-docker build -t bugle .
-docker run bugle --body="Hello!"
+bugle --body="Hello!"
 ```
 
 ### Manual Build (Golang)
@@ -31,18 +23,29 @@ docker run bugle --body="Hello!"
 git clone https://github.com/debeshmandal/bugle.git
 cd bugle
 go install .
+bugle --body="Hello!"
 ```
 
-## Usage
-After installation, use Bugle by running:
+### Docker (DockerHub)
 ```bash
-Copy code
-docker run bugle [options]
-Replace [options] with your specific command line options for sending messages.
+docker run debeshmandal/bugle --body="Hello!"
+```
+
+### Docker (GitHub Container Registry)
+```bash
+docker run ghcr.io/debeshmandal/bugle --body="Hello!"
+```
+
+### Manual Build (Docker)
+```bash
+git clone https://github.com/debeshmandal/bugle.git
+cd bugle
+docker build -t bugle .
+docker run bugle --body="Hello!"
 ```
 
 ## Contributing
 Contributions to Bugle are welcome! Please refer to the contributing guidelines for more information on how to get involved.
 
-License
+## License
 Bugle is licensed under the GPL-3.0 license. See the LICENSE file for details.
