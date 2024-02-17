@@ -15,7 +15,7 @@ To get started with Bugle, clone this repository and build the Docker container:
 ### Golang
 ```bash
 go install github.com/debeshmandal/bugle
-bugle --body="Hello!"
+bugle --body="Hello!" --dry-run
 ```
 
 ### Manual Build (Golang)
@@ -23,17 +23,17 @@ bugle --body="Hello!"
 git clone https://github.com/debeshmandal/bugle.git
 cd bugle
 go install .
-bugle --body="Hello!"
+bugle --body="Hello!" --dry-run
 ```
 
 ### Docker (DockerHub)
 ```bash
-docker run debeshmandal/bugle --body="Hello!"
+docker run debeshmandal/bugle --body="Hello!" --dry-run
 ```
 
 ### Docker (GitHub Container Registry)
 ```bash
-docker run ghcr.io/debeshmandal/bugle --body="Hello!"
+docker run ghcr.io/debeshmandal/bugle --body="Hello!" --dry-run
 ```
 
 ### Manual Build (Docker)
@@ -41,7 +41,12 @@ docker run ghcr.io/debeshmandal/bugle --body="Hello!"
 git clone https://github.com/debeshmandal/bugle.git
 cd bugle
 docker build -t bugle .
-docker run bugle --body="Hello!"
+docker run bugle --body="Hello!" --dry-run
+```
+
+### Apptainer (DockerHub)
+```bash
+apptainer run docker://debeshmandal/bugle --body="Hello!" --dry-run
 ```
 
 ## Contributing
