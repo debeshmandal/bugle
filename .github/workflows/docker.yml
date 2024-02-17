@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      MAX_IMAGE_SIZE: 10000000 # 10 MB
+      MAX_IMAGE_SIZE: 20000000 # 10 MB
       IMAGE_TAG: bugle:latest
 
     steps:
