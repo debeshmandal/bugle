@@ -6,11 +6,10 @@ import (
 )
 
 func TestCreateMessage(t *testing.T) {
-	test_message := regexp.MustCompile("Hello World!")
-	msg, err := CreateMessage()
-	if !test_message.MatchString(msg) || err != nil {
-		t.Fatalf(
-			`Hello("Gladys") = %q, %v, want match for %#q, nil`,
-			msg, err, test_message)
+	test_body := regexp.MustCompile("Hello World!")
+	msg := CreateMessage()
+	body := PartToString(msg.GetParts()[0])
+	if !test_body.MatchString(body) {
+		t.Fatalf(`CreateMessage() = %q; want match for %#q`, body, test_body)
 	}
 }

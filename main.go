@@ -2,19 +2,23 @@ package main
 
 import (
 	"fmt"
-	"log"
+
+	"github.com/wneessen/go-mail"
 )
 
-func CreateMessage() (string, error) {
-	message := "Hello World!"
-	return message, nil
+func PartToString(p *mail.Part) string {
+	body, _ := p.GetContent()
+	return string(body)
+}
+
+func CreateMessage() *mail.Msg {
+	message := mail.NewMsg()
+	message.SetBodyString(mail.TypeTextPlain, "Hello World!")
+	return message
 }
 
 func main() {
-	message, err := CreateMessage()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(message)
+	message := CreateMessage()
+	body := message.GetParts()[0]
+	fmt.Println(PartToString(body))
 }
