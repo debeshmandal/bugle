@@ -120,9 +120,10 @@ func main() {
 
 	if dryRun {
 		fmt.Println(PartToString(message.GetParts()[0]))
-	}
-	client := CreateClient()
-	if err := client.DialAndSend(message); err != nil {
-		log.Fatalf("Failed to send mail: %s", err)
+	} else {
+		client := CreateClient()
+		if err := client.DialAndSend(message); err != nil {
+			log.Fatalf("Failed to send mail: %s", err)
+		}
 	}
 }
